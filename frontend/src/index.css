@@ -7,8 +7,8 @@
 body {
   margin: 0;
   font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #FDFBF7;
-  color: #0A0A0A;
+  background: #F5F1E4;
+  color: #1F5A2A;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,25 +24,25 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 @layer base {
   :root {
-    --background: 40 45% 98%;
-    --foreground: 0 0% 4%;
+    --background: 48 42% 93%;
+    --foreground: 135 48% 24%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
+    --card-foreground: 135 48% 24%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 50 100% 67%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 265 100% 82%;
-    --secondary-foreground: 0 0% 4%;
-    --muted: 40 30% 94%;
-    --muted-foreground: 0 0% 29%;
-    --accent: 166 77% 78%;
-    --accent-foreground: 0 0% 4%;
+    --popover-foreground: 135 48% 24%;
+    --primary: 123 40% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 122 38% 74%;
+    --secondary-foreground: 135 48% 24%;
+    --muted: 48 30% 88%;
+    --muted-foreground: 135 20% 35%;
+    --accent: 88 54% 53%;
+    --accent-foreground: 135 48% 24%;
     --destructive: 0 100% 71%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 4%;
-    --input: 0 0% 89%;
-    --ring: 50 100% 67%;
+    --border: 135 48% 24%;
+    --input: 135 15% 85%;
+    --ring: 123 40% 40%;
     --radius: 0.25rem;
   }
 }
@@ -53,26 +53,26 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* Neo-brutalist utility classes */
-.nb-border { border: 2px solid #0A0A0A; }
-.nb-shadow { box-shadow: 4px 4px 0 0 #0A0A0A; }
-.nb-shadow-lg { box-shadow: 6px 6px 0 0 #0A0A0A; }
-.nb-shadow-sm { box-shadow: 2px 2px 0 0 #0A0A0A; }
-.nb-shadow-purple { box-shadow: 4px 4px 0 0 #C4A1FF; }
+.nb-border { border: 2px solid #1F5A2A; }
+.nb-shadow { box-shadow: 4px 4px 0 0 #1F5A2A; }
+.nb-shadow-lg { box-shadow: 6px 6px 0 0 #1F5A2A; }
+.nb-shadow-sm { box-shadow: 2px 2px 0 0 #1F5A2A; }
+.nb-shadow-accent { box-shadow: 4px 4px 0 0 #A5D6A7; }
 
 .nb-press {
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 .nb-press:hover {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 #0A0A0A;
+  box-shadow: 2px 2px 0 0 #1F5A2A;
 }
 .nb-press:active {
   transform: translate(4px, 4px);
-  box-shadow: 0 0 0 0 #0A0A0A;
+  box-shadow: 0 0 0 0 #1F5A2A;
 }
 
 .grain {
-  background-image: radial-gradient(rgba(10,10,10,0.04) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(31,90,42,0.05) 1px, transparent 1px);
   background-size: 4px 4px;
 }
 
@@ -104,4 +104,4 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
-::selection { background: #FFE156; color: #0A0A0A; }
+::selection { background: #8BC34A; color: #1F5A2A; }

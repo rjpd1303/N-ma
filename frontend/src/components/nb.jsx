@@ -1,8 +1,8 @@
 import React from "react";
 
 export function NBCard({ children, className = "", color = "white", ...props }) {
-  const bg = { white: "bg-white", yellow: "bg-[#FFE156]", purple: "bg-[#C4A1FF]",
-               teal: "bg-[#98F5E1]", red: "bg-[#FF6B6B]", cream: "bg-[#FDFBF7]" }[color] || color;
+  const bg = { white: "bg-white", yellow: "bg-[#8BC34A]", purple: "bg-[#A5D6A7]",
+               teal: "bg-[#C5E1A5]", red: "bg-[#FF6B6B]", cream: "bg-[#F5F1E4]" }[color] || color;
   return (
     <div className={`${bg} nb-border nb-shadow ${className}`} {...props}>
       {children}
@@ -12,12 +12,12 @@ export function NBCard({ children, className = "", color = "white", ...props }) 
 
 export function NBButton({ children, className = "", variant = "primary", ...props }) {
   const variants = {
-    primary: "bg-[#FFE156] text-black",
-    dark: "bg-black text-white",
-    purple: "bg-[#C4A1FF] text-black",
-    teal: "bg-[#98F5E1] text-black",
+    primary: "bg-[#8BC34A] text-[#1F5A2A]",
+    dark: "bg-[#1F5A2A] text-white",
+    purple: "bg-[#A5D6A7] text-[#1F5A2A]",
+    teal: "bg-[#C5E1A5] text-[#1F5A2A]",
     danger: "bg-[#FF6B6B] text-white",
-    ghost: "bg-white text-black",
+    ghost: "bg-white text-[#1F5A2A]",
   };
   return (
     <button
@@ -29,7 +29,7 @@ export function NBButton({ children, className = "", variant = "primary", ...pro
   );
 }
 
-export function NBBadge({ children, color = "#FFE156", className = "" }) {
+export function NBBadge({ children, color = "#8BC34A", className = "" }) {
   return (
     <span className={`inline-block px-2 py-0.5 nb-border text-xs font-bold uppercase tracking-wider ${className}`} style={{ background: color }}>
       {children}
@@ -55,7 +55,7 @@ export function NBTextarea(props) {
   );
 }
 
-export function NBProgress({ value = 0, color = "#C4A1FF" }) {
+export function NBProgress({ value = 0, color = "#A5D6A7" }) {
   return (
     <div className="w-full h-5 nb-border bg-white overflow-hidden relative">
       <div className="h-full transition-all" style={{ width: `${Math.min(100, Math.max(0, value))}%`, background: color, borderRight: value > 0 && value < 100 ? "2px solid #0A0A0A" : "none" }} />

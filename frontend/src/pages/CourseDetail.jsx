@@ -31,7 +31,7 @@ export default function CourseDetail() {
 
   const enroll = async () => {
     await api.post(`/courses/${id}/enroll`);
-    toast.success("Enrolled!");
+    toast.success("¡Inscrito!");
     load();
   };
 
@@ -44,12 +44,12 @@ export default function CourseDetail() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] grain">
+    <div className="min-h-screen bg-[#F5F1E4] grain">
       <Navbar />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-6" data-testid="course-detail">
         {/* Header */}
         <NBCard className="overflow-hidden">
-          <div className="h-32 border-b-2 border-black flex items-end p-6" style={{ background: course.cover_color || "#FFE156" }}>
+          <div className="h-32 border-b-2 border-black flex items-end p-6" style={{ background: course.cover_color || "#8BC34A" }}>
             <div>
               <NBBadge>{course.subject}</NBBadge>
               <h1 className="font-display font-black text-4xl sm:text-5xl uppercase mt-2 leading-[0.95]">{course.title}</h1>
@@ -57,19 +57,19 @@ export default function CourseDetail() {
           </div>
           <div className="p-6 flex flex-wrap items-center justify-between gap-4">
             <div className="flex-1 min-w-[220px]">
-              <p className="text-[#4A4A4A]">{course.description}</p>
-              <div className="label-caps mt-3">By {course.teacher_name} · {course.student_count} students</div>
+              <p className="text-[#3E5A3E]">{course.description}</p>
+              <div className="label-caps mt-3">Por {course.teacher_name} · {course.student_count} estudiantes</div>
             </div>
             <div className="flex gap-2">
               {course.is_owner && (
                 <Link to={`/courses/${id}/manage`}>
-                  <NBButton variant="dark" data-testid="course-manage-btn"><Pencil className="inline w-4 h-4 mr-1" /> Manage</NBButton>
+                  <NBButton variant="dark" data-testid="course-manage-btn"><Pencil className="inline w-4 h-4 mr-1" /> Administrar</NBButton>
                 </Link>
               )}
               {user?.role === "student" && !course.is_enrolled && (
-                <NBButton variant="primary" onClick={enroll} data-testid="course-enroll-btn">Enroll <ArrowRight className="inline w-4 h-4 ml-1" /></NBButton>
+                <NBButton variant="primary" onClick={enroll} data-testid="course-enroll-btn">Inscribirse <ArrowRight className="inline w-4 h-4 ml-1" /></NBButton>
               )}
-              {course.is_enrolled && <NBBadge color="#4ECDC4">Enrolled</NBBadge>}
+              {course.is_enrolled && <NBBadge color="#2E8B7F">Inscrito</NBBadge>}
             </div>
           </div>
         </NBCard>
@@ -78,7 +78,7 @@ export default function CourseDetail() {
         <div className="flex gap-2 flex-wrap">
           {tabs.map((t) => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className={`px-4 py-2 nb-border nb-press font-bold text-sm uppercase tracking-wider ${tab === t.id ? "bg-[#FFE156] nb-shadow" : "bg-white"}`}
+              className={`px-4 py-2 nb-border nb-press font-bold text-sm uppercase tracking-wider ${tab === t.id ? "bg-[#8BC34A] nb-shadow" : "bg-white"}`}
               data-testid={`course-tab-${t.id}`}>
               <t.icon className="w-4 h-4 inline mr-1" /> {t.label} ({t.count})
             </button>
@@ -88,7 +88,7 @@ export default function CourseDetail() {
         {/* Content */}
         {tab === "lessons" && (
           <div className="space-y-3">
-            {lessons.length === 0 ? <Empty text="No lessons yet." /> :
+            {lessons.length === 0 ? <Empty text="Aún no hay lecciones." /> :
               lessons.map((l) => (
                 <NBCard key={l.id} className="p-5" data-testid={`lesson-${l.id}`}>
                   <div className="font-display font-black text-xl">{l.title}</div>
@@ -100,18 +100,18 @@ export default function CourseDetail() {
 
         {tab === "resources" && (
           <div className="grid sm:grid-cols-2 gap-3">
-            {resources.length === 0 ? <Empty text="No resources yet." /> :
+            {resources.length === 0 ? <Empty text="Aún no hay recursos." /> :
               resources.map((r) => (
                 <a key={r.id} href={r.type === "link" ? r.url : `${API}/files/${r.file_id}`} target="_blank" rel="noopener noreferrer"
                    className="nb-press block" data-testid={`resource-${r.id}`}>
                   <NBCard className="p-4 flex items-start gap-3">
-                    <div className="w-10 h-10 nb-border flex items-center justify-center" style={{ background: r.type === "link" ? "#C4A1FF" : "#98F5E1" }}>
+                    <div className="w-10 h-10 nb-border flex items-center justify-center" style={{ background: r.type === "link" ? "#A5D6A7" : "#C5E1A5" }}>
                       {r.type === "link" ? <LinkIcon className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
                     </div>
                     <div className="flex-1">
                       <div className="font-bold">{r.title}</div>
-                      {r.description && <div className="text-sm text-[#4A4A4A]">{r.description}</div>}
-                      <NBBadge color={r.type === "link" ? "#C4A1FF" : "#98F5E1"} className="mt-1">{r.type}</NBBadge>
+                      {r.description && <div className="text-sm text-[#3E5A3E]">{r.description}</div>}
+                      <NBBadge color={r.type === "link" ? "#A5D6A7" : "#C5E1A5"} className="mt-1">{r.type === "link" ? "enlace" : "archivo"}</NBBadge>
                     </div>
                   </NBCard>
                 </a>
@@ -121,29 +121,29 @@ export default function CourseDetail() {
 
         {tab === "activities" && (
           <div className="space-y-3">
-            {activities.length === 0 ? <Empty text="No activities yet." /> :
+            {activities.length === 0 ? <Empty text="Aún no hay actividades." /> :
               activities.map((a) => (
                 <NBCard key={a.id} className="p-5 flex items-start justify-between gap-4" data-testid={`activity-${a.id}`}>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <NBBadge color={a.type === "quiz" ? "#C4A1FF" : "#98F5E1"}>{a.type}</NBBadge>
-                      {a.due_date && <span className="label-caps"><Clock className="w-3 h-3 inline" /> Due {new Date(a.due_date).toLocaleDateString()}</span>}
-                      <NBBadge color="#FFE156">{a.xp_reward} XP</NBBadge>
+                      <NBBadge color={a.type === "quiz" ? "#A5D6A7" : "#C5E1A5"}>{a.type === "quiz" ? "quiz" : "tarea"}</NBBadge>
+                      {a.due_date && <span className="label-caps"><Clock className="w-3 h-3 inline" /> Vence {new Date(a.due_date).toLocaleDateString("es-ES")}</span>}
+                      <NBBadge color="#8BC34A">{a.xp_reward} XP</NBBadge>
                     </div>
                     <div className="font-display font-black text-xl mt-1">{a.title}</div>
-                    <div className="text-sm text-[#4A4A4A] mt-1">{a.description}</div>
+                    <div className="text-sm text-[#3E5A3E] mt-1">{a.description}</div>
                     {a.my_submission && (
                       <div className="mt-2 flex items-center gap-2 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-[#4ECDC4]" />
-                        <span className="font-bold">Submitted</span>
-                        {a.my_submission.status === "graded" && <span className="font-mono">· Score {a.my_submission.score}/{a.max_points}</span>}
+                        <CheckCircle2 className="w-4 h-4 text-[#2E8B7F]" />
+                        <span className="font-bold">Entregado</span>
+                        {a.my_submission.status === "graded" && <span className="font-mono">· Puntaje {a.my_submission.score}/{a.max_points}</span>}
                       </div>
                     )}
                   </div>
                   {user?.role === "student" && course.is_enrolled && (
                     <Link to={`/activities/${a.id}`}>
                       <NBButton variant={a.my_submission ? "ghost" : "primary"} data-testid={`activity-open-${a.id}`}>
-                        {a.my_submission ? "View" : "Start"}
+                        {a.my_submission ? "Ver" : "Comenzar"}
                       </NBButton>
                     </Link>
                   )}

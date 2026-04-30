@@ -9,45 +9,45 @@ export default function Leaderboard() {
   useEffect(() => { (async () => { const { data } = await api.get("/leaderboard"); setRows(data); })(); }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] grain">
+    <div className="min-h-screen bg-[#F5F1E4] grain">
       <Navbar />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6" data-testid="leaderboard-page">
         <div className="flex items-end gap-3">
           <Trophy className="w-10 h-10" strokeWidth={2.5} />
           <div>
-            <div className="label-caps text-[#4A4A4A]">Top 50 students</div>
-            <h1 className="font-display font-black text-4xl sm:text-5xl uppercase">Leaderboard</h1>
+            <div className="label-caps text-[#3E5A3E]">Top 50 estudiantes</div>
+            <h1 className="font-display font-black text-4xl sm:text-5xl uppercase text-[#1F5A2A]">Ranking</h1>
           </div>
         </div>
 
         {/* Podium */}
         {rows.length > 0 && (
           <div className="grid grid-cols-3 gap-3 items-end">
-            <PodiumCard entry={rows[1]} place={2} height="h-36" color="#98F5E1" />
-            <PodiumCard entry={rows[0]} place={1} height="h-48" color="#FFE156" crown />
-            <PodiumCard entry={rows[2]} place={3} height="h-28" color="#C4A1FF" />
+            <PodiumCard entry={rows[1]} place={2} height="h-36" color="#C5E1A5" />
+            <PodiumCard entry={rows[0]} place={1} height="h-48" color="#8BC34A" crown />
+            <PodiumCard entry={rows[2]} place={3} height="h-28" color="#A5D6A7" />
           </div>
         )}
 
         <NBCard className="p-0 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-black text-white">
+            <thead className="bg-[#1F5A2A] text-white">
               <tr className="text-left label-caps">
-                <th className="px-4 py-3">Rank</th>
-                <th className="px-4 py-3">Player</th>
-                <th className="px-4 py-3">Level</th>
-                <th className="px-4 py-3">Badges</th>
+                <th className="px-4 py-3">Puesto</th>
+                <th className="px-4 py-3">Jugador</th>
+                <th className="px-4 py-3">Nivel</th>
+                <th className="px-4 py-3">Insignias</th>
                 <th className="px-4 py-3 text-right">XP</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.id} className={`border-t-2 border-black ${r.is_me ? "bg-[#FFE156]" : ""}`} data-testid={`leaderboard-row-${r.rank}`}>
+                <tr key={r.id} className={`border-t-2 border-[#1F5A2A] ${r.is_me ? "bg-[#8BC34A]" : ""}`} data-testid={`leaderboard-row-${r.rank}`}>
                   <td className="px-4 py-3 font-mono font-bold">#{r.rank}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 nb-border flex items-center justify-center font-display font-black" style={{ background: r.avatar_color }}>{r.name[0]?.toUpperCase()}</div>
-                      <span className="font-bold">{r.name}{r.is_me && <NBBadge color="#FF6B6B" className="ml-2">you</NBBadge>}</span>
+                      <span className="font-bold">{r.name}{r.is_me && <NBBadge color="#FF6B6B" className="ml-2">tú</NBBadge>}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3 font-mono">{r.level}</td>
@@ -55,7 +55,7 @@ export default function Leaderboard() {
                   <td className="px-4 py-3 text-right font-mono font-bold">{r.xp}</td>
                 </tr>
               ))}
-              {rows.length === 0 && <tr><td colSpan={5} className="px-4 py-6 text-center text-[#4A4A4A]">No students yet.</td></tr>}
+              {rows.length === 0 && <tr><td colSpan={5} className="px-4 py-6 text-center text-[#3E5A3E]">Aún no hay estudiantes.</td></tr>}
             </tbody>
           </table>
         </NBCard>

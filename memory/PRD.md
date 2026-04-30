@@ -36,6 +36,13 @@ Educational platform where teachers create their own courses, upload resources, 
 - Teacher dashboard (stats + pending-to-grade queue)
 - Landing page with marquee, feature cards, dual CTA (teacher / student)
 
+## Rebranded as NUMA (April 2026)
+- Rebranded full app from "EduQuest" to "NUMA — Plantas & Bienestar" with user-supplied logo image
+- Replaced Zap icon with NUMA logo image across Navbar, Landing, Login, Register
+- Translated entire UI to Spanish (dashboards, courses, activities, grading, leaderboard, profile)
+- New green palette: cream #F5F1E4 bg, dark green #1F5A2A borders/text, bright lime #8BC34A (primary), mint #A5D6A7 (secondary), pale lime #C5E1A5 (tertiary), deep teal #2E8B7F (success)
+- Badges localized: "Primeros Pasos", "Pionero", "Maestro del Quiz", "Estrella Naciente", "Erudito", "Polímata"
+
 ## Backlog (P1)
 - Rich text / markdown rendering for lessons (currently pre-wrap)
 - Calendar view for upcoming due dates (shadcn calendar available)

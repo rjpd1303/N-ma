@@ -1,24 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { NBButton, NBBadge, NBCard } from "../components/nb";
-import { Zap, Trophy, BookOpen, Sparkles, ArrowRight, Users, Star, Target } from "lucide-react";
+import { Trophy, BookOpen, Sparkles, ArrowRight, Star, Target } from "lucide-react";
 
-const MARQUEE_WORDS = ["Learn", "Teach", "Level Up", "Earn XP", "Unlock Badges", "Climb Leaderboards"];
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_courseforge-69/artifacts/fi0qofox_e5ed343a-cd69-4fa8-8147-0cc3ec580460.jpeg";
+const MARQUEE_WORDS = ["Aprende", "Enseña", "Sube de nivel", "Gana XP", "Desbloquea insignias", "Escala el ranking"];
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[#FDFBF7] grain">
+    <div className="min-h-screen bg-[#F5F1E4] grain">
       {/* Top nav */}
       <header className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-[#FFE156] nb-border nb-shadow-sm flex items-center justify-center">
-            <Zap className="w-6 h-6" strokeWidth={3} />
+        <div className="flex items-center gap-3">
+          <img src={LOGO_URL} alt="NUMA" className="w-12 h-12 nb-border nb-shadow-sm object-cover bg-white" />
+          <div className="leading-tight">
+            <div className="font-display font-black text-2xl text-[#1F5A2A]">NUMA</div>
+            <div className="label-caps text-[0.6rem] text-[#3E8E41]">Plantas & Bienestar</div>
           </div>
-          <span className="font-display font-black text-2xl">EduQuest</span>
         </div>
         <div className="flex gap-2">
-          <Link to="/login"><NBButton variant="ghost" data-testid="landing-login-btn">Login</NBButton></Link>
-          <Link to="/register"><NBButton variant="dark" data-testid="landing-register-btn">Sign up</NBButton></Link>
+          <Link to="/login"><NBButton variant="ghost" data-testid="landing-login-btn">Entrar</NBButton></Link>
+          <Link to="/register"><NBButton variant="dark" data-testid="landing-register-btn">Registrarse</NBButton></Link>
         </div>
       </header>
 
@@ -26,33 +28,33 @@ export default function Landing() {
       <section className="max-w-7xl mx-auto px-6 pt-8 pb-20 grid lg:grid-cols-12 gap-10 items-start">
         <div className="lg:col-span-7 space-y-6">
           <div className="flex items-center gap-2">
-            <NBBadge color="#98F5E1" className="animate-bounce-in">Neo-Learning Platform</NBBadge>
-            <NBBadge color="#C4A1FF" className="animate-bounce-in" style={{animationDelay: "0.1s"}}>Gamified XP</NBBadge>
+            <NBBadge color="#C5E1A5" className="animate-bounce-in">Plataforma educativa</NBBadge>
+            <NBBadge color="#A5D6A7" className="animate-bounce-in" style={{animationDelay: "0.1s"}}>XP gamificado</NBBadge>
           </div>
-          <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight uppercase">
-            Teach. Learn. <br/>
-            <span className="bg-[#FFE156] nb-border px-3 inline-block my-1">Level up.</span>
+          <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight uppercase text-[#1F5A2A]">
+            Enseña. Aprende. <br/>
+            <span className="bg-[#8BC34A] nb-border px-3 inline-block my-1">Florece.</span>
           </h1>
-          <p className="text-lg max-w-xl text-[#4A4A4A] leading-relaxed">
-            A bold classroom where teachers craft courses, upload resources, and grade activities — while students earn XP, unlock badges, and race up the leaderboard.
+          <p className="text-lg max-w-xl text-[#3E5A3E] leading-relaxed">
+            Un aula viva donde los profesores crean cursos, suben recursos y califican actividades — mientras los estudiantes ganan XP, desbloquean insignias y escalan el ranking.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link to="/register?role=teacher">
               <NBButton variant="primary" className="text-base px-7 py-3.5" data-testid="hero-teacher-cta">
-                I'm a teacher <ArrowRight className="inline w-4 h-4 ml-1" />
+                Soy profesor <ArrowRight className="inline w-4 h-4 ml-1" />
               </NBButton>
             </Link>
             <Link to="/register?role=student">
               <NBButton variant="purple" className="text-base px-7 py-3.5" data-testid="hero-student-cta">
-                I'm a student <ArrowRight className="inline w-4 h-4 ml-1" />
+                Soy estudiante <ArrowRight className="inline w-4 h-4 ml-1" />
               </NBButton>
             </Link>
           </div>
 
           <div className="grid grid-cols-3 gap-3 pt-6 max-w-md">
-            <Stat value="100+" label="XP per task" />
-            <Stat value="6" label="Badges" />
-            <Stat value="∞" label="Courses" />
+            <Stat value="100+" label="XP por tarea" />
+            <Stat value="6" label="Insignias" />
+            <Stat value="∞" label="Cursos" />
           </div>
         </div>
 
@@ -61,15 +63,15 @@ export default function Landing() {
           <NBCard color="yellow" className="p-6 rotate-1 animate-slide-up">
             <div className="flex items-center justify-between">
               <div>
-                <div className="label-caps text-black/60">Level 7</div>
+                <div className="label-caps text-[#1F5A2A]/70">Nivel 7</div>
                 <div className="font-display font-black text-3xl">ALEX ·  1,420 XP</div>
               </div>
               <Trophy className="w-10 h-10" strokeWidth={2.5} />
             </div>
             <div className="mt-4 h-5 nb-border bg-white overflow-hidden">
-              <div className="h-full bg-[#C4A1FF]" style={{ width: "65%", borderRight: "2px solid #0A0A0A" }} />
+              <div className="h-full bg-[#A5D6A7]" style={{ width: "65%", borderRight: "2px solid #1F5A2A" }} />
             </div>
-            <div className="label-caps mt-2">Next: Level 8</div>
+            <div className="label-caps mt-2">Siguiente: Nivel 8</div>
           </NBCard>
 
           <NBCard color="white" className="p-5 -rotate-1 animate-slide-up" style={{animationDelay: "0.1s"}}>
@@ -78,23 +80,23 @@ export default function Landing() {
                 <Star className="w-6 h-6 text-white" fill="white" strokeWidth={2.5} />
               </div>
               <div>
-                <div className="font-display font-black text-lg">Quiz Master</div>
-                <div className="text-sm text-[#4A4A4A]">Scored 95% on Physics Quiz #3</div>
-                <div className="label-caps mt-1 text-[#4ECDC4]">+50 XP · Unlocked</div>
+                <div className="font-display font-black text-lg">Maestro del Quiz</div>
+                <div className="text-sm text-[#3E5A3E]">Sacó 95% en el Quiz de Botánica #3</div>
+                <div className="label-caps mt-1 text-[#2E8B7F]">+50 XP · Desbloqueada</div>
               </div>
             </div>
           </NBCard>
 
           <NBCard color="teal" className="p-5 rotate-1 animate-slide-up" style={{animationDelay: "0.2s"}}>
-            <div className="label-caps">Upcoming activity</div>
-            <div className="font-display font-black text-xl mt-1">Essay — The Cold War</div>
-            <div className="text-sm">Due Friday · Worth 120 XP</div>
+            <div className="label-caps">Próxima actividad</div>
+            <div className="font-display font-black text-xl mt-1">Ensayo — Plantas Medicinales</div>
+            <div className="text-sm">Vence el viernes · Vale 120 XP</div>
           </NBCard>
         </div>
       </section>
 
       {/* Marquee */}
-      <div className="border-y-2 border-black bg-black text-[#FFE156] overflow-hidden py-4">
+      <div className="border-y-2 border-[#1F5A2A] bg-[#1F5A2A] text-[#8BC34A] overflow-hidden py-4">
         <div className="flex animate-marquee whitespace-nowrap gap-12 font-display font-black text-3xl uppercase">
           {[...MARQUEE_WORDS, ...MARQUEE_WORDS, ...MARQUEE_WORDS].map((w, i) => (
             <span key={i} className="flex items-center gap-12">
@@ -106,51 +108,51 @@ export default function Landing() {
 
       {/* Features */}
       <section className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-3 gap-6">
-        <Feature icon={<BookOpen className="w-7 h-7" />} title="Build rich courses" body="Upload PDFs & videos, embed YouTube & Drive links, and write lesson pages in rich text." color="#FFE156" />
-        <Feature icon={<Target className="w-7 h-7" />} title="Assignments + Quizzes" body="Schedule tasks with due dates. Auto-grade quizzes. Review and grade file submissions." color="#98F5E1" />
-        <Feature icon={<Trophy className="w-7 h-7" />} title="Gamify everything" body="Students earn XP, level up, collect badges, and climb the course leaderboard." color="#C4A1FF" />
+        <Feature icon={<BookOpen className="w-7 h-7" />} title="Crea cursos ricos" body="Sube PDFs y videos, inserta enlaces de YouTube y Drive, y redacta lecciones en texto enriquecido." color="#8BC34A" />
+        <Feature icon={<Target className="w-7 h-7" />} title="Tareas + Quizzes" body="Programa actividades con fecha límite. Auto-califica quizzes. Revisa y puntúa entregas de archivos." color="#C5E1A5" />
+        <Feature icon={<Trophy className="w-7 h-7" />} title="Gamifica todo" body="Los estudiantes ganan XP, suben de nivel, coleccionan insignias y escalan el ranking del curso." color="#A5D6A7" />
       </section>
 
       {/* How it works */}
       <section className="max-w-7xl mx-auto px-6 pb-24">
-        <h2 className="font-display font-black text-4xl sm:text-5xl mb-10 uppercase">How it works</h2>
+        <h2 className="font-display font-black text-4xl sm:text-5xl mb-10 uppercase text-[#1F5A2A]">Cómo funciona</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <NBCard className="p-8">
-            <NBBadge color="#FFE156">For Teachers</NBBadge>
+            <NBBadge color="#8BC34A">Para profesores</NBBadge>
             <ol className="mt-4 space-y-3 font-medium">
-              <Step n="01">Create a course & set the vibe</Step>
-              <Step n="02">Add lessons, resources, activities</Step>
-              <Step n="03">Review submissions, grade with feedback</Step>
-              <Step n="04">Watch your class level up</Step>
+              <Step n="01">Crea un curso y define su estilo</Step>
+              <Step n="02">Agrega lecciones, recursos y actividades</Step>
+              <Step n="03">Revisa entregas y califica con feedback</Step>
+              <Step n="04">Observa cómo tu clase sube de nivel</Step>
             </ol>
           </NBCard>
           <NBCard color="purple" className="p-8">
-            <NBBadge color="#FDFBF7">For Students</NBBadge>
+            <NBBadge color="#F5F1E4">Para estudiantes</NBBadge>
             <ol className="mt-4 space-y-3 font-medium">
-              <Step n="01">Browse and enroll in any course</Step>
-              <Step n="02">Study lessons & download resources</Step>
-              <Step n="03">Submit assignments or ace quizzes</Step>
-              <Step n="04">Earn XP, unlock badges, top the leaderboard</Step>
+              <Step n="01">Explora e inscríbete en cualquier curso</Step>
+              <Step n="02">Estudia las lecciones y descarga recursos</Step>
+              <Step n="03">Entrega tareas o domina los quizzes</Step>
+              <Step n="04">Gana XP, desbloquea insignias, lidera el ranking</Step>
             </ol>
           </NBCard>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-black text-white py-16 border-y-2 border-black">
+      <section className="bg-[#1F5A2A] text-white py-16 border-y-2 border-[#1F5A2A]">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
-          <h2 className="font-display font-black text-4xl sm:text-6xl uppercase">Your classroom. Unlocked.</h2>
-          <p className="text-[#FDFBF7]/80">Free to start. Invite students in minutes.</p>
+          <h2 className="font-display font-black text-4xl sm:text-6xl uppercase">Tu aula. Desbloqueada.</h2>
+          <p className="text-white/80">Gratis para empezar. Invita a tus estudiantes en minutos.</p>
           <div className="flex justify-center gap-3">
-            <Link to="/register"><NBButton variant="primary" className="text-base px-8 py-4" data-testid="cta-register-btn">Get started</NBButton></Link>
-            <Link to="/login"><NBButton variant="ghost" className="text-base px-8 py-4" data-testid="cta-login-btn">Login</NBButton></Link>
+            <Link to="/register"><NBButton variant="primary" className="text-base px-8 py-4" data-testid="cta-register-btn">Comenzar</NBButton></Link>
+            <Link to="/login"><NBButton variant="ghost" className="text-base px-8 py-4" data-testid="cta-login-btn">Entrar</NBButton></Link>
           </div>
         </div>
       </section>
 
       <footer className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between text-sm">
-        <span className="font-mono">EduQuest © 2026</span>
-        <span className="font-mono">Built with love & 2px borders.</span>
+        <span className="font-mono text-[#1F5A2A]">NUMA © 2026</span>
+        <span className="font-mono text-[#1F5A2A]">Plantas medicinales y bienestar.</span>
       </footer>
     </div>
   );
