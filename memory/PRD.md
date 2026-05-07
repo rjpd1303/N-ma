@@ -43,6 +43,13 @@ Educational platform where teachers create their own courses, upload resources, 
 - New green palette: cream #F5F1E4 bg, dark green #1F5A2A borders/text, bright lime #8BC34A (primary), mint #A5D6A7 (secondary), pale lime #C5E1A5 (tertiary), deep teal #2E8B7F (success)
 - Badges localized: "Primeros Pasos", "Pionero", "Maestro del Quiz", "Estrella Naciente", "Erudito", "Polímata"
 
+## Improvements (May 2026)
+- **Quiz review screen**: after submitting a quiz, students see a review showing each question with correct answer (green) vs their pick (red) with X/check icons. `/api/activities/{id}` now reveals `correct_index` only after submission.
+- **Markdown rendering for lessons**: installed `react-markdown`, lessons display headings, lists, tables, bold, links with branded prose styles.
+- **Upcoming activities widget**: new `/api/me/upcoming` endpoint returns up to 10 unsubmitted activities for student's enrolled courses, sorted by due date. Rendered as a calendar-card grid on the student dashboard with date badges.
+- **Sample course seeded on startup**: "Plantas Medicinales 101" with 3 markdown lessons (qué son, principios activos, buenas prácticas), 2 link resources, 1 quiz (4 Qs about manzanilla, decocción, alcaloides, ginkgo), 1 assignment ("Mi botiquín verde").
+- **Visual cleanup**: replaced all `border-black`/`bg-black` references with `#1F5A2A` for full palette coherence; course cover color picker now uses on-brand greens.
+
 ## Backlog (P1)
 - Rich text / markdown rendering for lessons (currently pre-wrap)
 - Calendar view for upcoming due dates (shadcn calendar available)

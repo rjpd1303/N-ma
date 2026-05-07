@@ -99,12 +99,12 @@ def require_role(*roles):
 
 # ---------- Gamification ----------
 BADGES = [
-    {"id": "first_enroll", "name": "First Steps", "description": "Enrolled in your first course", "icon": "Compass", "color": "#C4A1FF"},
-    {"id": "first_submission", "name": "Trailblazer", "description": "Submitted your first activity", "icon": "Rocket", "color": "#98F5E1"},
-    {"id": "quiz_master", "name": "Quiz Master", "description": "Scored 90%+ on a quiz", "icon": "Trophy", "color": "#FFE156"},
-    {"id": "level_5", "name": "Rising Star", "description": "Reached Level 5", "icon": "Star", "color": "#FF6B6B"},
-    {"id": "level_10", "name": "Scholar", "description": "Reached Level 10", "icon": "GraduationCap", "color": "#4ECDC4"},
-    {"id": "three_courses", "name": "Polymath", "description": "Enrolled in 3+ courses", "icon": "BookOpen", "color": "#C4A1FF"},
+    {"id": "first_enroll", "name": "Primeros Pasos", "description": "Te inscribiste en tu primer curso", "icon": "Compass", "color": "#A5D6A7"},
+    {"id": "first_submission", "name": "Pionero", "description": "Entregaste tu primera actividad", "icon": "Rocket", "color": "#C5E1A5"},
+    {"id": "quiz_master", "name": "Maestro del Quiz", "description": "Sacaste 90%+ en un quiz", "icon": "Trophy", "color": "#8BC34A"},
+    {"id": "level_5", "name": "Estrella Naciente", "description": "Llegaste al Nivel 5", "icon": "Star", "color": "#FF6B6B"},
+    {"id": "level_10", "name": "Erudito", "description": "Llegaste al Nivel 10", "icon": "GraduationCap", "color": "#2E8B7F"},
+    {"id": "three_courses", "name": "Polímata", "description": "Te inscribiste en 3+ cursos", "icon": "BookOpen", "color": "#A5D6A7"},
 ]
 
 def xp_to_level(xp: int) -> int:
