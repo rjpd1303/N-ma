@@ -11,6 +11,7 @@ from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Literal, Dict, Any
 
 import bcrypt
+import certifi
 import jwt
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, UploadFile, File, Form
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -28,7 +29,15 @@ DEFAULT_CORS_ORIGINS = (
 
 mongo_url = os.environ.get("MONGO_URL")
 db_name = os.environ.get("DB_NAME")
-client = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=5000) if mongo_url else None
+client = (
+    AsyncIOMotorClient(
+        mongo_url,
+        serverSelectionTimeoutMS=5000,
+        tlsCAFile=certifi.where(),
+    )
+    if mongo_url
+    else None
+)
 db = client[db_name] if client is not None and db_name else None
 db_startup_error: Optional[str] = None
 
