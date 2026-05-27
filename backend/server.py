@@ -13,16 +13,24 @@ from typing import List, Optional, Literal, Dict, Any
 import bcrypt
 import jwt
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, UploadFile, File, Form
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
 import io
 
 # ---------- Setup ----------
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+REQUIRED_ENV = ("MONGO_URL", "DB_NAME", "JWT_SECRET")
+DEFAULT_CORS_ORIGINS = (
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+)
+
+mongo_url = os.environ.get("MONGO_URL")
+db_name = os.environ.get("DB_NAME")
+client = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=5000) if mongo_url else None
+db = client[db_name] if client is not None and db_name else None
+db_startup_error: Optional[str] = None
 
 JWT_ALGORITHM = "HS256"
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
@@ -32,6 +40,38 @@ api = APIRouter(prefix="/api")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("eduquest")
+
+def missing_required_env() -> List[str]:
+    return [key for key in REQUIRED_ENV if not os.environ.get(key)]
+
+def cors_origins() -> List[str]:
+    raw = os.environ.get("CORS_ORIGINS")
+    if not raw:
+        return list(DEFAULT_CORS_ORIGINS)
+    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+
+@app.middleware("http")
+async def require_configured_backend(request: Request, call_next):
+    if request.url.path.endswith("/api/health"):
+        return await call_next(request)
+    missing = missing_required_env()
+    if request.url.path.startswith("/api") and missing:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "detail": "Backend is not fully configured",
+                "missing_env": missing,
+            },
+        )
+    if request.url.path.startswith("/api") and db_startup_error:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "detail": "Database startup failed",
+                "error": db_startup_error,
+            },
+        )
+    return await call_next(request)
 
 # ---------- Helpers ----------
 def now_utc() -> datetime:
@@ -189,6 +229,33 @@ class QuizSubmissionIn(BaseModel):
 class GradeIn(BaseModel):
     score: int
     feedback: str = ""
+
+# ---------- Health ----------
+@app.get("/")
+async def root():
+    return {"ok": True, "service": "EduQuest API"}
+
+@api.get("/health")
+async def health():
+    missing = missing_required_env()
+    database = {
+        "configured": db is not None,
+        "ok": False,
+        "name": db_name if db_name else None,
+    }
+    if db is not None and client is not None:
+        try:
+            await client.admin.command("ping")
+            database["ok"] = True
+        except Exception as exc:
+            database["error"] = f"{type(exc).__name__}: {exc}"
+    if db_startup_error:
+        database["startup_error"] = db_startup_error
+    return {
+        "ok": not missing and database["ok"] and not db_startup_error,
+        "missing_env": missing,
+        "database": database,
+    }
 
 # ---------- Auth ----------
 @api.post("/auth/register")
@@ -756,40 +823,52 @@ async def seed_sample_course(db, teacher_id: str):
 # ---------- Startup ----------
 @app.on_event("startup")
 async def startup():
-    await db.users.create_index("email", unique=True)
-    await db.users.create_index("id", unique=True)
-    await db.courses.create_index("id", unique=True)
-    await db.enrollments.create_index([("course_id", 1), ("student_id", 1)], unique=True)
-    await db.user_badges.create_index([("user_id", 1), ("badge_id", 1)], unique=True)
-    # Seed admin + demo
-    admin_email = os.environ.get("ADMIN_EMAIL", "admin@eduquest.com")
-    admin_password = os.environ.get("ADMIN_PASSWORD", "admin123")
-    existing = await db.users.find_one({"email": admin_email})
-    if not existing:
-        admin_id = str(uuid.uuid4())
-        await db.users.insert_one({
-            "id": admin_id,
-            "email": admin_email,
-            "name": "NUMA",
-            "password_hash": hash_password(admin_password),
-            "role": "teacher",
-            "xp": 0, "level": 1, "avatar_color": "#8BC34A",
-            "created_at": now_iso(),
-        })
-        existing = {"id": admin_id}
-    await seed_sample_course(db, existing["id"])
-    logger.info("NUMA startup complete")
+    global db_startup_error
+    missing = missing_required_env()
+    if missing or db is None:
+        db_startup_error = None
+        logger.error("NUMA startup skipped; missing env vars: %s", ", ".join(missing))
+        return
+    try:
+        await db.users.create_index("email", unique=True)
+        await db.users.create_index("id", unique=True)
+        await db.courses.create_index("id", unique=True)
+        await db.enrollments.create_index([("course_id", 1), ("student_id", 1)], unique=True)
+        await db.user_badges.create_index([("user_id", 1), ("badge_id", 1)], unique=True)
+        # Seed admin + demo
+        admin_email = os.environ.get("ADMIN_EMAIL", "admin@eduquest.com")
+        admin_password = os.environ.get("ADMIN_PASSWORD", "admin123")
+        existing = await db.users.find_one({"email": admin_email})
+        if not existing:
+            admin_id = str(uuid.uuid4())
+            await db.users.insert_one({
+                "id": admin_id,
+                "email": admin_email,
+                "name": "NUMA",
+                "password_hash": hash_password(admin_password),
+                "role": "teacher",
+                "xp": 0, "level": 1, "avatar_color": "#8BC34A",
+                "created_at": now_iso(),
+            })
+            existing = {"id": admin_id}
+        await seed_sample_course(db, existing["id"])
+        db_startup_error = None
+        logger.info("NUMA startup complete")
+    except Exception as exc:
+        db_startup_error = f"{type(exc).__name__}: {exc}"
+        logger.exception("NUMA startup failed")
 
 @app.on_event("shutdown")
 async def shutdown():
-    client.close()
+    if client is not None:
+        client.close()
 
 app.include_router(api)
 
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=cors_origins(),
     allow_methods=["*"],
     allow_headers=["*"],
 )
