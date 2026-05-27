@@ -1,7 +1,11 @@
 import axios from "axios";
 import { cacheApiResponse, readApiCache, queueSubmission } from "./offline";
 
-export const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL ||
+  (process.env.NODE_ENV === "production" ? "/_/backend" : "");
+
+export const API = `${BACKEND_URL}/api`;
 
 export const api = axios.create({
   baseURL: API,
