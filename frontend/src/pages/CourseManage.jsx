@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { api, API } from "../lib/api";
 import Navbar from "../components/Navbar";
@@ -16,7 +16,7 @@ export default function CourseManage() {
   const [activities, setActivities] = useState([]);
   const [submissions, setSubmissions] = useState([]);
 
-  const loadAll = async () => {
+  const loadAll = useCallback(async () => {
     const [c, ls, rs, as, ss] = await Promise.all([
       api.get(`/courses/${id}`),
       api.get(`/courses/${id}/lessons`),
@@ -25,8 +25,8 @@ export default function CourseManage() {
       api.get(`/courses/${id}/submissions`),
     ]);
     setCourse(c.data); setLessons(ls.data); setResources(rs.data); setActivities(as.data); setSubmissions(ss.data);
-  };
-  useEffect(() => { loadAll(); }, [id]);
+  }, [id]);
+  useEffect(() => { loadAll(); }, [loadAll]);
 
   const switchTab = (t) => { setTab(t); setParams({ tab: t }); };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { api, API, submitWithQueue } from "../lib/api";
 import { useAuth } from "../lib/auth";
@@ -18,13 +18,13 @@ export default function ActivityDetail() {
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState(null);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     const { data } = await api.get(`/activities/${id}`);
     setA(data);
     if (data.type === "quiz") setAnswers(new Array(data.quiz_questions?.length || 0).fill(-1));
     if (data.my_submission) setResult(data.my_submission);
-  };
-  useEffect(() => { load(); }, [id]);
+  }, [id]);
+  useEffect(() => { load(); }, [load]);
 
   const submitAssignment = async (e) => {
     e.preventDefault();

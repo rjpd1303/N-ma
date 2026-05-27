@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, API } from "../lib/api";
 import { useAuth } from "../lib/auth";
@@ -22,7 +22,7 @@ export default function CourseDetail() {
   const [downloading, setDownloading] = useState(false);
   const [offlineFiles, setOfflineFiles] = useState({});
 
-  const load = async () => {
+  const load = useCallback(async () => {
     const { data: c } = await api.get(`/courses/${id}`);
     setCourse(c);
     const [ls, rs, as] = await Promise.all([
@@ -37,8 +37,8 @@ export default function CourseDetail() {
       if (r.type === "file" && r.file_id) fmap[r.file_id] = await isFileOffline(r.file_id);
     }
     setOfflineFiles(fmap);
-  };
-  useEffect(() => { load(); }, [id]);
+  }, [id]);
+  useEffect(() => { load(); }, [load]);
 
   const downloadCourseOffline = async () => {
     setDownloading(true);
